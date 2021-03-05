@@ -9,17 +9,24 @@
 template <typename T>
 class Stack {
     public:
+        Stack(const Stack<T>&)     = delete;
+        Stack(Stack<T>&&) noexcept = delete;
+
+        Stack<T>& operator=(const Stack<T>&)     = delete;
+        Stack<T>& operator=(Stack<T>&&) noexcept = delete;
+
         Stack();
         ~Stack() noexcept;
 
         void push(const T& _data);
+        
         void pop();
         void clear();
 
+        const T peek() const;
+
         const bool isEmpty() const;
         const uint size() const;
-
-        const T peek() const;
 
     private:
         template <typename U>
@@ -62,14 +69,14 @@ template <typename T> void Stack<T>::clear() {
         pop();
 }
 
-template <typename T> const bool Stack<T>::isEmpty() const { return (cnt == 0); }
-template <typename T> const uint Stack<T>::size() const { return cnt; }
-
 template <typename T> const T Stack<T>::peek() const {
     if (cnt)
         return tail->data;
 
     return T{};
 }
+
+template <typename T> const bool Stack<T>::isEmpty() const { return (cnt == 0); }
+template <typename T> const uint Stack<T>::size() const { return cnt; }
 
 #endif
