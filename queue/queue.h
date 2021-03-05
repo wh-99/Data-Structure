@@ -9,17 +9,24 @@
 template <typename T>
 class Queue {
     public:
+        Queue(const Queue<T>&)     = delete;
+        Queue(Queue<T>&&) noexcept = delete;
+
+        Queue<T>& operator=(const Queue<T>&)     = delete;
+        Queue<T>& operator=(Queue<T>&&) noexcept = delete;
+
         Queue();
         ~Queue() noexcept;
 
         void push(const T& _data);
+        
         void pop();
         void clear();
 
+        const T peek() const;
+
         const bool isEmpty() const;
         const uint size() const;
-
-        const T peek() const;
 
     private:
         template <typename U>
@@ -69,14 +76,14 @@ template <typename T> void Queue<T>::clear() {
         pop();
 }
 
-template <typename T> const bool Queue<T>::isEmpty() const { return (cnt == 0); }
-template <typename T> const uint Queue<T>::size() const { return cnt; }
-
 template <typename T> const T Queue<T>::peek() const {
     if (cnt)
         return head->data;
     
     return T{};
 }
+
+template <typename T> const bool Queue<T>::isEmpty() const { return (cnt == 0); }
+template <typename T> const uint Queue<T>::size() const { return cnt; }
 
 #endif
